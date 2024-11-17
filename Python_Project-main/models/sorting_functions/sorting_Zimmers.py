@@ -1,0 +1,124 @@
+from models.config import connection
+
+def sort_by_name_zim(nameZim):
+    conn = connection()
+
+    try:
+        with conn.cursor() as cursor:
+            query ="""
+                SELECT z.NameZim, z.LocationZim, z.IsPool, z.IsJacuzzi, z.MidweekPrice, z.TypeZim, l.PhoneLand, z.IMG
+                FROM Zimmers z
+                JOIN landlords l ON z.LandID = l.LandLordID
+                WHERE z.NameZim = ?
+                """
+            cursor.execute(query, (nameZim,))
+            res = cursor.fetchall()
+
+            zimmer_list = []
+            for row in res:
+                zimmer_list.append({
+                    "NameZim": row[0],
+                    "LocationZim": row[1],
+                    "IsPool": row[2],
+                    "IsZacuzzi": row[3],
+                    "MidweekPrice": row[4],
+                    "TypeZim": row[5],
+                    "Phone": row[6],
+                    "IMG": row[7]
+                })
+            return zimmer_list
+    finally:
+        conn.close()
+
+
+def sort_by_Location(location):
+    conn = connection()
+
+    try:
+        with conn.cursor() as cursor:
+            query = """
+                SELECT z.NameZim, z.LocationZim, z.IsPool, z.IsJacuzzi, z.MidweekPrice, z.TypeZim, l.PhoneLand, z.IMG
+                FROM Zimmers z
+                JOIN landlords l ON z.LandID = l.LandLordID
+                WHERE z.Area = ?
+                """
+            cursor.execute(query, (location,))
+            res = cursor.fetchall()
+
+            zimmer_list = []
+            for row in res:
+                zimmer_list.append({
+                    "NameZim": row[0],
+                    "LocationZim": row[1],
+                    "IsPool": row[2],
+                    "IsZacuzzi": row[3],
+                    "MidweekPrice": row[4],
+                    "TypeZim": row[5],
+                    "Phone": row[6],
+                    "IMG": row[7]
+                })
+            return zimmer_list
+    finally:
+        conn.close()
+
+
+def sort_by_price_asc():
+    conn = connection()
+    try:
+        with conn.cursor() as cursor:
+            query = """
+                        SELECT z.NameZim, z.LocationZim, z.IsPool, z.IsJacuzzi, z.MidweekPrice, z.TypeZim, l.PhoneLand, z.IMG
+                        FROM Zimmers z
+                        JOIN landlords l ON z.LandID = l.LandLordID
+                        ORDER BY MidweekPrice ASC
+                        """
+
+            cursor.execute(query)
+            res = cursor.fetchall()
+
+            zimmer_list = []
+            for row in res:
+                zimmer_list.append({
+                    "NameZim": row[0],
+                    "LocationZim": row[1],
+                    "IsPool": row[2],
+                    "IsZacuzzi": row[3],
+                    "MidweekPrice": row[4],
+                    "TypeZim": row[5],
+                    "Phone": row[6],
+                    "IMG": row[7]
+                })
+            return zimmer_list
+    finally:
+        conn.close()
+def sort_by_price_desc():
+    conn = connection()
+    try:
+        with conn.cursor() as cursor:
+            query = """
+                    SELECT z.NameZim, z.LocationZim, z.IsPool, z.IsJacuzzi, z.MidweekPrice, z.TypeZim, l.PhoneLand, z.IMG
+                    FROM Zimmers z
+                    JOIN landlords l ON z.LandID = l.LandLordID
+                    ORDER BY MidweekPrice DESC
+                    """
+
+            cursor.execute(query)
+            res = cursor.fetchall()
+
+            zimmer_list = []
+            for row in res:
+                zimmer_list.append({
+                    "NameZim": row[0],
+                    "LocationZim": row[1],
+                    "IsPool": row[2],
+                    "IsZacuzzi": row[3],
+                    "MidweekPrice": row[4],
+                    "TypeZim": row[5],
+                    "Phone": row[6],
+                    "IMG": row[7]
+                })
+            return zimmer_list
+    finally:
+        conn.close()
+
+
